@@ -205,7 +205,7 @@ return results, nil
 }
 
 func main(){
-dsn := "host=localhost user=postgres password=postgres dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Kolkata"
+dsn := "host=localhost user=postgres password=postgres dbname=test port=5432 sslmode=disable TimeZone=Asia/Kolkata"
 db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 if err != nil {
 	panic("failed to connect database")
@@ -232,6 +232,7 @@ if err == nil {
 			ResultDesc:  r.ResultDesc,
 			CreatedAt:   time.Now(),
 		}
+		db.Create(&sr)
 		// insert the SearchResult into the database
 		if err := db.Create(&sr).Error; err != nil {
 			fmt.Println("failed to insert search result:", err)
